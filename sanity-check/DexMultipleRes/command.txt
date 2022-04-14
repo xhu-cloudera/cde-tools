@@ -1,0 +1,22 @@
+cde resource create --name resource-spark-apps
+cde resource upload --name resource-spark-apps --local-path pyspark_wordcount.py
+
+
+cde resource create --name resource-data-sets
+cde resource upload --name resource-data-sets --local-path wordcount_input_1.txt
+
+
+cde resource create --name resource-output-templates
+cde resource upload --name resource-output-templates --local-path word_count_templates.txt
+
+
+cde job create --name spark_wordcount_resources_job --type spark \
+    --application-file pyspark_wordcount.py \
+    --num-executors 4 \
+    --mount-1-resource resource-spark-apps \
+    --mount-2-resource resource-data-sets \
+    --mount-3-resource resource-output-templates \
+    --arg "file:///app/mount/wordcount_input_1.txt" \
+    --arg "file:///app/mount/word_count_templates.txt" \
+    --conf spark.pyspark.python=python3
+  

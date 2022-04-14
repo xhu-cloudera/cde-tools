@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "6b9a0855-0878-43a7-8d4d-bc393292b4a2",
+		"name": "DEX-BASE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"    const jsonData = pm.response.json();",
+							"    const token = jsonData.access_token;",
+							"    console.log(token);",
+							"    pm.environment.set(\"dex-app-token\", token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{cdp-password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{cdp-username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dex-base-host}}/gateway/authtkn/knoxtoken/api/v1/token",
+					"host": [
+						"{{dex-base-host}}"
+					],
+					"path": [
+						"gateway",
+						"authtkn",
+						"knoxtoken",
+						"api",
+						"v1",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

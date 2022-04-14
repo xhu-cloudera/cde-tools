@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "5d61261c-1d3f-4550-90f3-ecb8fd8c2648",
+		"name": "DEX-INIT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cluster",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    console.log(jsonData);",
+							"    if (jsonData.length > 0) {",
+							"        const cluster = jsonData[0]",
+							"        const clusterID = cluster.id.substring(8);",
+							"        console.log(clusterID);",
+							"        pm.environment.set(\"dex-cluster-id-suffix\", clusterID);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "{{cdp-cookie}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{cdp-host}}/dex/api/v1/cluster",
+					"host": [
+						"{{cdp-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"cluster"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClusterID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"    const jsonData = pm.response.json();",
+							"    const clusterID = jsonData.clusterInfo.ClusterFQDN;",
+							"    console.log(clusterID);",
+							"    pm.environment.set(\"dex-base-host\", \"https://\"+clusterID);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "{{cdp-cookie}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{cdp-host}}/dex/api/v1/cluster/{{dex-cluster-id}}",
+					"host": [
+						"{{cdp-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"cluster",
+						"{{dex-cluster-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListInstances",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"    const jsonData = pm.response.json();",
+							"    if (jsonData.length > 0) {",
+							"        const dexapp = jsonData[0];",
+							"        const dexAppHost = dexapp.appInfo.domain;",
+							"        const vcIDSuffix = dexapp.id.substring(8);",
+							"        console.log(dexAppHost);",
+							"        console.log(vcIDSuffix);",
+							"        pm.environment.set(\"dex-app-host\", \"https://\"+dexAppHost);",
+							"        pm.environment.set(\"dex-vc-id-suffix\", vcIDSuffix);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "{{cdp-cookie}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{cdp-host}}/dex/api/v1/cluster/{{dex-cluster-id}}/instance",
+					"host": [
+						"{{cdp-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"cluster",
+						"{{dex-cluster-id}}",
+						"instance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InstanceID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"    const jsonData = pm.response.json();",
+							"    console.log(jsonData);",
+							"    const dexAppHost = jsonData.appInfo.domain;",
+							"    const vcIDSuffix = jsonData.id.substring(8);",
+							"    console.log(dexAppHost);",
+							"    console.log(vcIDSuffix);",
+							"    pm.environment.set(\"dex-app-host\", \"https://\"+dexAppHost);",
+							"    pm.environment.set(\"dex-vc-id-suffix\", vcIDSuffix);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "{{cdp-cookie}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{cdp-host}}/dex/api/v1/cluster/{{dex-cluster-id}}/instance/{{dex-instance-id}}",
+					"host": [
+						"{{cdp-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"cluster",
+						"{{dex-cluster-id}}",
+						"instance",
+						"{{dex-instance-id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

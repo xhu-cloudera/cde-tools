@@ -1,0 +1,1203 @@
+{
+	"info": {
+		"_postman_id": "03a8a7d7-295d-47c4-8468-3add0a7895d7",
+		"name": "DEX-Sanity Check-Clean up",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Complex DAG",
+			"item": [
+				{
+					"name": "Delete-Complex-DAG-Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/complex-dag-job",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"complex-dag-job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-Complex-DAG-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-complex-dag",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-complex-dag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-Spark-SQL-Shell-Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/spark_sql_shell_mimic",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"spark_sql_shell_mimic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-Spark-SQL-Shell-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-spark-sql-shell-job",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-spark-sql-shell-job"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Heavy Driver Log Job",
+			"item": [
+				{
+					"name": "Delete-Heavy-Driver-Log Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/heavy-driver-log-job",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"heavy-driver-log-job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-Heavy-Driver-Log-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/heavy-driver-log-job-resource",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"heavy-driver-log-job-resource"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bash Operator with Parameter",
+			"item": [
+				{
+					"name": "Delete-Bash-Operator-Parameter Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/bashoperator-parameter-job",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"bashoperator-parameter-job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-Bash-Operator-Parameter Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-bash-operator",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-bash-operator"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dynamic Spark DAG",
+			"item": [
+				{
+					"name": "Delete-Dynamic-Spark-DAG Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/dynamic-spark-dag-job",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"dynamic-spark-dag-job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-Dynamic-Spark-DAG Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-dynamic-spark-dag",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-dynamic-spark-dag"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete-Scala-Spark-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/spark-scala-pi-job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"spark-scala-pi-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-PySpark-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/pyspark-batch-job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"pyspark-batch-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-PySpark-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-pyspark-job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"AutoResource-pyspark-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-WordCount-Read-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/scala-wordcount-hdfs-read-job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"scala-wordcount-hdfs-read-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-WordCount-Read-Write-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/scala-wordcount-hdfs-read-write-job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"scala-wordcount-hdfs-read-write-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-WordCount-Read-Write-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-jdfs-read-write-job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"AutoResource-jdfs-read-write-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-Multiple-Resources-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/spark_wordcount_resources_job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"spark_wordcount_resources_job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-MultiResources-App-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/resource-spark-apps",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"resource-spark-apps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-MultiResources-DataSets-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/resource-data-sets",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"resource-data-sets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-MultiResources-OutputTemplates-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/resource-output-templates",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"resource-output-templates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-Spark-Pi-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/spark-job-test-xhu-1",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"spark-job-test-xhu-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-Spark-Pi-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/spark-job-test-1-resource-1",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"spark-job-test-1-resource-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-Access-Log-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/pyspark-sql-access-logs",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"pyspark-sql-access-logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-Access-Log-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-pyspark-access-logs",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"AutoResource-pyspark-access-logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-CDEOperator-Job",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/jobs/cdeoperator-job",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"jobs",
+						"cdeoperator-job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete-CDE-Operator-Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{dex-app-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-cde-operator",
+					"host": [
+						"{{dex-app-host}}"
+					],
+					"path": [
+						"dex",
+						"api",
+						"v1",
+						"resources",
+						"AutoResource-cde-operator"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{dex-app-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,3343 @@
+{
+	"info": {
+		"_postman_id": "dc54a178-927d-4f87-9b30-5a3936614d04",
+		"name": "DEX-Sanity Check",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Scala Spark Job",
+			"item": [
+				{
+					"name": "Scala Spark Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"spark-scala-pi-job\",\n    \"spark\":\n    {\n        \"args\":\n        [\n            \"22\"\n        ],\n        \"className\": \"org.apache.spark.examples.SparkPi\",\n        \"conf\":\n        {\n            \"spark.dynamicAllocation.minExecutors\": \"1\",\n            \"spark.dynamicAllocation.maxExecutors\": \"50\",\n            \"spark.dynamicAllocation.initialExecutors\": \"1\",\n            \"dex.safariEnabled\": \"true\"\n        },\n        \"driverCores\": 1,\n        \"driverMemory\": \"1g\",\n        \"executorCores\": 1,\n        \"executorMemory\": \"1g\",\n        \"logLevel\": \"INFO\",\n        \"file\": \"http://qe-repo.s3.amazonaws.com/dex/app-jar/spark-examples_2.11-2.4.4.jar\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        []\n    },\n    \"mounts\":\n    [],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scala Spark Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/spark-scala-pi-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"spark-scala-pi-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs Scala Spark Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]spark-scala-pi-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]spark-scala-pi-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PySpark Job",
+			"item": [
+				{
+					"name": "PySpark Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-pyspark-job\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PySpark Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/pyspark-batch-job.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-pyspark-job/pyspark-batch-job.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-pyspark-job",
+								"pyspark-batch-job.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PySpark Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"pyspark-batch-job\",\n    \"spark\":\n    {\n        \"args\":\n        [],\n        \"className\": \"\",\n        \"conf\":\n        {\n            \"spark.pyspark.python\": \"python3\",\n            \"spark.dynamicAllocation.maxExecutors\": \"50\",\n            \"dex.safariEnabled\": \"false\"\n        },\n        \"driverCores\": 1,\n        \"executorCores\": 1,\n        \"logLevel\": \"INFO\",\n        \"file\": \"pyspark-batch-job.py\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        [],\n        \"executorMemory\": \"1g\",\n        \"driverMemory\": \"1g\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-pyspark-job\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PySpark Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/pyspark-batch-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"pyspark-batch-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs PySpark Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]pyspark-batch-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]pyspark-batch-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WordCount Read",
+			"item": [
+				{
+					"name": "Scala WordCount HDFS Read Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"scala-wordcount-hdfs-read-job\",\n    \"spark\":\n    {\n        \"args\":\n        [\n            \"hdfs:///tmp/sparkdata/wordcount.txt\"\n        ],\n        \"className\": \"org.apache.spark.examples.HdfsTest\",\n        \"conf\":\n        {\n            \"spark.dynamicAllocation.minExecutors\": \"1\",\n            \"spark.dynamicAllocation.maxExecutors\": \"50\",\n            \"spark.dynamicAllocation.initialExecutors\": \"1\",\n            \"dex.safariEnabled\": \"true\"\n        },\n        \"driverCores\": 1,\n        \"driverMemory\": \"1g\",\n        \"executorCores\": 1,\n        \"executorMemory\": \"1g\",\n        \"logLevel\": \"INFO\",\n        \"file\": \"http://qe-repo.s3.amazonaws.com/dex/app-jar/spark-examples_2.11-2.4.4.jar\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        []\n    },\n    \"mounts\":\n    [],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scala WordCount HDFS Read Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/scala-wordcount-hdfs-read-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"scala-wordcount-hdfs-read-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs Scala WordCount HDFS Read Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]scala-wordcount-hdfs-read-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]scala-wordcount-hdfs-read-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WordCount Read-Write",
+			"item": [
+				{
+					"name": "HDFS Read-Write Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-jdfs-read-write-job\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HDFS Read-Write Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/scala-wordcount-hdfs-read-write.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-jdfs-read-write-job/scala-wordcount-hdfs-read-write.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-jdfs-read-write-job",
+								"scala-wordcount-hdfs-read-write.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scala WordCount HDFS Read-Write Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"scala-wordcount-hdfs-read-write-job\",\n    \"spark\":\n    {\n        \"args\":\n        [\n            \"hdfs:///tmp/sparkdata/wordcount.txt\",\n            \"hdfs:///tmp/sparkdata/output_00001\"\n        ],\n        \"className\": \"\",\n        \"conf\":\n        {\n            \"spark.pyspark.python\": \"python3\",\n            \"spark.dynamicAllocation.maxExecutors\": \"50\",\n            \"dex.safariEnabled\": \"false\"\n        },\n        \"driverCores\": 1,\n        \"executorCores\": 1,\n        \"logLevel\": \"INFO\",\n        \"file\": \"scala-wordcount-hdfs-read-write.py\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        [],\n        \"executorMemory\": \"1g\",\n        \"driverMemory\": \"1g\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-jdfs-read-write-job\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scala WordCount HDFS Read-Write Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/scala-wordcount-hdfs-read-write-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"scala-wordcount-hdfs-read-write-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs Scala WordCount HDFS Read-Write Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]scala-wordcount-hdfs-read-write-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]scala-wordcount-hdfs-read-write-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Multiple Resources",
+			"item": [
+				{
+					"name": "Spark Multiple-Resources Create-Resource-spark-apps",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"resource-spark-apps\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multiple-Resources Upload-File-spark-apps",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/DexMultipleRes/pyspark_wordcount.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/resource-spark-apps/pyspark_wordcount.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"resource-spark-apps",
+								"pyspark_wordcount.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark Multiple-Resources Create-Resource-data-sets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"resource-data-sets\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multiple-Resources Upload-File-data-sets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/DexMultipleRes/wordcount_input_1.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/resource-data-sets/wordcount_input_1.txt",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"resource-data-sets",
+								"wordcount_input_1.txt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark Multiple-Resources Create-Resource-outptu-templates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"resource-output-templates\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multiple-Resources Upload-File-output-templates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/DexMultipleRes/word_count_templates.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/resource-output-templates/word_count_templates.txt",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"resource-output-templates",
+								"word_count_templates.txt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark WordCount Resources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"spark_wordcount_resources_job\",\n    \"spark\":\n    {\n        \"args\":\n        [\n            \"file:///app/mount/wordcount_input_1.txt\",\n            \"file:///app/mount/word_count_templates.txt\"\n        ],\n        \"className\": \"\",\n        \"conf\":\n        {\n            \"spark.pyspark.python\": \"python3\",\n            \"spark.dynamicAllocation.maxExecutors\": \"4\",\n            \"dex.safariEnabled\": \"false\"\n        },\n        \"driverCores\": 1,\n        \"executorCores\": 1,\n        \"logLevel\": \"INFO\",\n        \"file\": \"pyspark_wordcount.py\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        [],\n        \"executorMemory\": \"1g\",\n        \"driverMemory\": \"1g\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"resource-spark-apps\",\n            \"dirPrefix\": \"\"\n        },\n        {\n            \"resourceName\": \"resource-data-sets\",\n            \"dirPrefix\": \"\"\n        },\n        {\n            \"resourceName\": \"resource-output-templates\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark WordCount Resources Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/spark_wordcount_resources_job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"spark_wordcount_resources_job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs Spark WordCount Resources Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]spark_wordcount_resources_job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]spark_wordcount_resources_job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Spark Pi Resource",
+			"item": [
+				{
+					"name": "Spark Pi Create-Resource-spark-job-test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"spark-job-test-1-resource-1\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark Pi Upload-File-spark-examples-jar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/spark-examples_2.11-2.4.4.jar"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/spark-job-test-1-resource-1/spark-examples_2.11-2.4.4.jar",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"spark-job-test-1-resource-1",
+								"spark-examples_2.11-2.4.4.jar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark Pi",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"spark-job-test-xhu-1\",\n    \"spark\":\n    {\n        \"args\":\n        [],\n        \"className\": \"org.apache.spark.examples.SparkPi\",\n        \"conf\":\n        {\n            \"spark.dynamicAllocation.minExecutors\": \"1\",\n            \"spark.dynamicAllocation.maxExecutors\": \"50\",\n            \"spark.dynamicAllocation.initialExecutors\": \"1\",\n            \"dex.safariEnabled\": \"true\"\n        },\n        \"driverCores\": 1,\n        \"driverMemory\": \"1g\",\n        \"executorCores\": 1,\n        \"executorMemory\": \"1g\",\n        \"logLevel\": \"INFO\",\n        \"file\": \"spark-examples_2.11-2.4.4.jar\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        []\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"spark-job-test-1-resource-1\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark Pi Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/spark-job-test-xhu-1/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"spark-job-test-xhu-1",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs Spark Pi Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]spark-job-test-xhu-1&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]spark-job-test-xhu-1"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Heavy Driver Log Job",
+			"item": [
+				{
+					"name": "Heavy Driver Log Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"heavy-driver-log-job-resource\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Heavy Driver Log Upload Jar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman."
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/heavy-driver-log.jar"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/heavy-driver-log-job-resource/heavy-driver-log.jar",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"heavy-driver-log-job-resource",
+								"heavy-driver-log.jar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Heavy Driver Log",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"heavy-driver-log-job\",\n    \"spark\":\n    {\n        \"className\": \"DriverLog\",\n        \"logLevel\": \"INFO\",\n        \"file\": \"heavy-driver-log.jar\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"heavy-driver-log-job-resource\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Heavy Driver Log  Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json; charset=utf-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/heavy-driver-log-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"heavy-driver-log-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PySpark SQL",
+			"item": [
+				{
+					"name": "PySpark Access-logs Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-pyspark-access-logs\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PySpark Access-logs Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/access-logs-ETL.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-pyspark-access-logs/access-logs-ETL.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-pyspark-access-logs",
+								"access-logs-ETL.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PySpark Access-logs Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"pyspark-sql-access-logs\",\n    \"spark\":\n    {\n        \"args\":\n        [],\n        \"className\": \"\",\n        \"conf\":\n        {\n            \"spark.pyspark.python\": \"python3\",\n            \"spark.dynamicAllocation.maxExecutors\": \"50\",\n            \"dex.safariEnabled\": \"false\"\n        },\n        \"driverCores\": 1,\n        \"executorCores\": 1,\n        \"logLevel\": \"INFO\",\n        \"file\": \"access-logs-ETL.py\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        [],\n        \"executorMemory\": \"1g\",\n        \"driverMemory\": \"1g\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-pyspark-access-logs\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PySpark Access-logs Job-Run",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"    const jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.id).to.gte(1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/pyspark-sql-access-logs/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"pyspark-sql-access-logs",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs PySpark Access-logs Job",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]pyspark-sql-access-logs&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]pyspark-sql-access-logs"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CDE Operator",
+			"item": [
+				{
+					"name": "CDEOperator Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-cde-operator\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDEOperator Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/cdeoperator.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-cde-operator/cdeoperator.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-cde-operator",
+								"cdeoperator.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDE Operator Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"cdeoperator-job\",\n    \"airflow\":\n    {\n        \"dagFile\": \"cdeoperator.py\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-cde-operator\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"type\": \"airflow\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs CDE Operator",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]cdeoperator-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]cdeoperator-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs CDE Operator With Parameter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"overrides\": {\n        \"airflow\": {\n            \"config\": {\n                \"conf1\": \"Hello-World!\"\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/cdeoperator-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"cdeoperator-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bash Operator with Parameter",
+			"item": [
+				{
+					"name": "BashOperator Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-bash-operator\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDEOperator Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/bashoperator_with_parameter.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-bash-operator/bashoperator_with_parameter.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-bash-operator",
+								"bashoperator_with_parameter.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDE Operator Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"bashoperator-parameter-job\",\n    \"airflow\":\n    {\n        \"dagFile\": \"bashoperator_with_parameter.py\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-bash-operator\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"type\": \"airflow\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs CDE Operator",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]bashoperator-parameter-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]bashoperator-parameter-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs CDE Operator With Parameter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"overrides\": {\n        \"airflow\": {\n            \"config\": {\n                \"key\": \"Hello-World!\"\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/bashoperator-parameter-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"bashoperator-parameter-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Complex DAG",
+			"item": [
+				{
+					"name": "Spark SQL Shell Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-spark-sql-shell-job\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark SQL Shell Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/execute_sql_queries.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-spark-sql-shell-job/execute_sql_queries.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-spark-sql-shell-job",
+								"execute_sql_queries.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spark SQL Shell Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"spark_sql_shell_mimic\",\n    \"spark\":\n    {\n        \"args\":\n        [\n            \"{{{ spark_queries }}}\"\n        ],\n        \"className\": \"\",\n        \"conf\":\n        {\n            \"spark.pyspark.python\": \"python3\",\n            \"spark.dynamicAllocation.maxExecutors\": \"50\",\n            \"dex.safariEnabled\": \"false\"\n        },\n        \"driverCores\": 1,\n        \"executorCores\": 1,\n        \"logLevel\": \"INFO\",\n        \"file\": \"execute_sql_queries.py\",\n        \"pyFiles\":\n        [],\n        \"jars\":\n        [],\n        \"files\":\n        [],\n        \"executorMemory\": \"1g\",\n        \"driverMemory\": \"1g\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-spark-sql-shell-job\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"schedule\":\n    {\n        \"catchup\": false,\n        \"cronExpression\": \"\",\n        \"dependsOnPast\": false,\n        \"enabled\": false,\n        \"paused\": true,\n        \"start\": \"\",\n        \"end\": \"\"\n    },\n    \"type\": \"spark\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complex DAG Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-complex-dag\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complex DAG Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/complex-dag.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-complex-dag/complex-dag.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-complex-dag",
+								"complex-dag.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complex DAG Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"complex-dag-job\",\n    \"airflow\":\n    {\n        \"dagFile\": \"complex-dag.py\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-complex-dag\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"type\": \"airflow\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs Complex DAG",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]complex-dag-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]complex-dag-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dynamic Spark DAG",
+			"item": [
+				{
+					"name": "Dynamic Spark DAG Create-Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AutoResource-dynamic-spark-dag\",\n    \"hidden\": false,\n    \"type\": \"files\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dynamic Spark DAG Upload-File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "sanity-check/complex-dag.py"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/resources/AutoResource-complex-dag/complex-dag.py",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"resources",
+								"AutoResource-complex-dag",
+								"complex-dag.py"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dynamic Spark DAG Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"dynamic-spark-dag-job\",\n    \"airflow\":\n    {\n        \"dagFile\": \"dynamic-spark-dag.py\"\n    },\n    \"mounts\":\n    [\n        {\n            \"resourceName\": \"AutoResource-dynamic-spark-dag\",\n            \"dirPrefix\": \"\"\n        }\n    ],\n    \"type\": \"airflow\"\n}"
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Job-Runs Dynamic Spark DAG",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/job-runs?filter=job[eq]dynamic-spark-dag-job&offset=0",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"job-runs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "job[eq]dynamic-spark-dag-job"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dynamic Spark DAG Job-Run",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{dex-app-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"overrides\": {\n        \"airflow\": {\n            \"config\": {\n                \"create_db_query\": \"CREATE database if not exists dynamic_spark_db\",\n                \"drop_db_query\": \"DROP database dynamic_spark_db\"\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dex-app-host}}/dex/api/v1/jobs/dynamic-spark-dag-job/run",
+							"host": [
+								"{{dex-app-host}}"
+							],
+							"path": [
+								"dex",
+								"api",
+								"v1",
+								"jobs",
+								"dynamic-spark-dag-job",
+								"run"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{dex-app-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
